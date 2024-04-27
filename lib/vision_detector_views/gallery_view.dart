@@ -104,4 +104,6 @@ class _GalleryViewState extends State<GalleryView> {
     final inputImage = InputImage.fromFilePath(path);
     widget.onImage(inputImage);
   }
+
+  Future storeImageToFirebase() async {}
 }

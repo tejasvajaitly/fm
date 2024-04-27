@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fm/constants/routes.dart';
 import 'package:fm/views/login_view.dart';
+import 'package:fm/views/main_app_view.dart';
 import 'package:fm/views/register_view.dart';
 import 'package:fm/views/verify_email_view.dart';
+import 'package:path/path.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +19,10 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        mainappRoute: (context) => MainApp(),
+        verifyRoute: (context) => VerifyEmailView(),
       }));
 }
 
@@ -36,20 +41,13 @@ class HomePage extends StatelessWidget {
               final user = FirebaseAuth.instance.currentUser;
               if (user != null) {
                 if (user.emailVerified) {
-                  print('email verified');
+                  return MainApp();
                 } else {
                   return const VerifyEmailView();
                 }
               } else {
                 return const LoginView();
               }
-              return const Text('done');
-              // if (user != null && user.emailVerified) {
-              //   return Text('done');
-              // } else {
-              //   return VerifyEmailView();
-              // }
-              return LoginView();
 
             default:
               return const CircularProgressIndicator();
@@ -57,62 +55,3 @@ class HomePage extends StatelessWidget {
         });
   }
 }
-
-
-
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Image Picker Example'),
-//       ),
-//       body: Center(
-//         child:
-//             _image == null ? Text('No image selected.') : Image.file(_image!),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: getImage,
-//         tooltip: 'Pick Image',
-//         child: Icon(Icons.add_a_photo),
-//       ),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-
-// import 'vision_detector_views/label_detector_view.dart';
-
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Home(),
-//     );
-//   }
-// }
-
-// class Home extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Google ML Kit Demo App'),
-//         centerTitle: true,
-//         elevation: 0,
-//       ),
-//       body: SafeArea(
-//         child: Center(child: ImageLabelView()),
-//       ),
-//     );
-//   }
-// }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fm/constants/routes.dart';
 import 'package:fm/firebase_options.dart';
 
 class LoginView extends StatefulWidget {
@@ -13,6 +14,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -66,11 +68,20 @@ class _LoginViewState extends State<LoginView> {
                               .signInWithEmailAndPassword(
                                   email: email, password: password);
                           print(userCredential);
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              mainappRoute, (route) => false);
                         } on FirebaseAuthException catch (e) {
                           if (e.code == "user-not-found") {
                             print('user not found');
                           } else if (e.code == "invalid-credential") {
-                            print('Wrong password');
+                            print(e.code);
+                            setState(() {
+                              _errorMessage = 'something went wrong';
+                            });
+                          } else {
+                            setState(() {
+                              _errorMessage = 'something went wrong';
+                            });
                           }
                         }
                       },
@@ -79,9 +90,17 @@ class _LoginViewState extends State<LoginView> {
                     TextButton(
                         onPressed: () {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/register/', (route) => false);
+                              registerRoute, (route) => false);
                         },
-                        child: Text('not registered ? register here'))
+                        child: Column(
+                          children: [
+                            Text('not registered ? register here'),
+                            Text(
+                              _errorMessage,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ],
+                        ))
                   ],
                 );
 

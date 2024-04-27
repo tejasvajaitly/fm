@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fm/constants/routes.dart';
 import 'package:fm/firebase_options.dart';
 
 class RegisterView extends StatefulWidget {
@@ -13,6 +14,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -65,16 +67,26 @@ class _RegisterViewState extends State<RegisterView> {
                           final userCredential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
                                   email: email, password: password);
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              verifyRoute, (route) => false);
                         } on FirebaseAuthException catch (e) {
                           if (e.code == "weak-password") {
-                            print(
-                                "that's a weak password, try with a stronger passwor");
+                            setState(() {
+                              _errorMessage =
+                                  "that's a weak password, try with a stronger passwor";
+                            });
                           } else if (e.code == 'email-already-in-use') {
-                            print('this email is already in use');
+                            setState(() {
+                              _errorMessage = "this email is already in use";
+                            });
                           } else if (e.code == 'invalid-email') {
-                            print('the email format is invalid');
+                            setState(() {
+                              _errorMessage = "the email format is invalid";
+                            });
                           } else {
-                            print(e.code);
+                            setState(() {
+                              _errorMessage = "something went wrong!";
+                            });
                           }
                         }
                       },
@@ -83,9 +95,17 @@ class _RegisterViewState extends State<RegisterView> {
                     TextButton(
                         onPressed: () {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/login/', (route) => false);
+                              loginRoute, (route) => false);
                         },
-                        child: Text('already registered ? login here'))
+                        child: Column(
+                          children: [
+                            Text('already registered ? login here'),
+                            Text(
+                              _errorMessage,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ],
+                        ))
                   ],
                 );
 
