@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register your accout')),
+      appBar: AppBar(title: const Text('login')),
       body: FutureBuilder(
           future: Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform,
@@ -76,6 +76,12 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: const Text('login'),
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/register/', (route) => false);
+                        },
+                        child: Text('not registered ? register here'))
                   ],
                 );
 
