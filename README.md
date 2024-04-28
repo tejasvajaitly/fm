@@ -1,16 +1,18 @@
 # fm
 
-A new Flutter project.
+IOS app built with flutter to detect cattle in an image.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone the Repository:
+Install Flutter:
+Follow the official Flutter installation guide to install Flutter on your machine.
+iOS Setup:
+ - Install Cocoapods: If you haven't installed Cocoapods yet, you can do so by running: sudo gem install cocoapods
+ - Install Pod Dependencies: Navigate to the ios directory of your project and install the iOS dependencies using: pod install
+ - Run the App: After installing dependencies, you can run the app on your iOS simulator or device using the following command: flutter run
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##Additional Notes
+Make sure you have Xcode installed, as it's required for iOS development.
+Ensure your Flutter SDK is up to date by running flutter upgrade.
+If you encounter any issues, refer to the Flutter documentation, Cocoapods documentation, or search for solutions online. You can also reach out to our team for support.
