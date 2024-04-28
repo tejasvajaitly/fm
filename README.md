@@ -20,4 +20,4 @@ iOS Setup:
 ## Additional Notes
 Make sure you have Xcode installed, as it's required for iOS development.
 Ensure your Flutter SDK is up to date by running flutter upgrade.
-If you encounter any issues, refer to the Flutter documentation, Cocoapods documentation, or search for solutions online. You can also reach out to our team for support.
+If you encounter any issues, refer to the Flutter documentation, Cocoapods documentation, or search for solutions online. You can also reach out to me for support.
