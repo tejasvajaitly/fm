@@ -1,6 +1,11 @@
 # fm
 
-IOS app built with flutter to detect cattle in an image.
+This Flutter application is designed to demonstrate the integration of Firebase for authentication and Firestore for image storage, along with utilizing Google ML Kit for image labeling.
+
+##Features 
+- Firebase Authentication: Users can sign in and authenticate using their email. 
+- Cloud Firestore Storage: Images uploaded by users are stored in Cloud Firestore. 
+- Google ML Kit Image Labeling: The app utilizes Google ML Kit to perform image labeling on uploaded images.
 
 ## Getting Started
 
