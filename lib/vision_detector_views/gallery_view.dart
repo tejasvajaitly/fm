@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class GalleryView extends StatefulWidget {
   const GalleryView(
@@ -25,6 +27,8 @@ class _GalleryViewState extends State<GalleryView> {
   File? _image;
   String? _path;
   ImagePicker? _imagePicker;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   @override
   void initState() {
@@ -93,6 +97,7 @@ class _GalleryViewState extends State<GalleryView> {
     final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
       _processFile(pickedFile.path);
+      uploadImageToFirebase(File(pickedFile.path));
     }
   }
 
@@ -105,5 +110,17 @@ class _GalleryViewState extends State<GalleryView> {
     widget.onImage(inputImage);
   }
 
-  Future storeImageToFirebase() async {}
+  Future uploadImageToFirebase(File imageFile) async {
+    final fileName = DateTime.now().toString();
+    const destination = 'images/';
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child(fileName);
+      await ref.putFile(_image!);
+    } catch (e) {
+      print('error occured');
+    }
+  }
 }
